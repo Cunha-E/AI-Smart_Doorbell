@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Device Dashboard</title>
+</head>
+<body>
+    <h1>Device Dashboard</h1>
+    <p><a href="/">Back to Home</a></p>
+    <p><a href="/device/register">Register a New Device</a></p>
+
+    <h2>Registered Devices</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Serial Number</th>
+            <th>User ID</th>
+            <th>Registered At</th>
+        </tr>
+        {% for device in devices %}
+        <tr>
+            <td>{{ device.id }}</td>
+            <td>{{ device.serial_number }}</td>
+            <td>{{ device.user_id }}</td>
+            <td>{{ device.registered_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

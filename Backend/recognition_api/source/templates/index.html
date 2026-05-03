@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Face Recognition</title>
+</head>
+<body>
+
+<h2>Face Similarity Comparison</h2>
+
+<input type="file" id="img1" accept="image/*"><br><br>
+<input type="file" id="img2" accept="image/*"><br><br>
+
+<button onclick="compare()">Compare</button>
+
+<pre id="result"></pre>
+
+<script>
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function compare() {
+  const img1 = document.getElementById("img1").files[0];
+  const img2 = document.getElementById("img2").files[0];
+
+  if (!img1 || !img2) {
+    alert("Upload both images");
+    return;
+  }
+
+  const img1_b64 = await toBase64(img1);
+  const img2_b64 = await toBase64(img2);
+
+  const res = await fetch("/compare", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      image1: img1_b64,
+      image2: img2_b64
+    })
+  });
+
+  const data = await res.json();
+  document.getElementById("result").innerText =
+    JSON.stringify(data, null, 2);
+}
+</script>
+
+</body>
+</html>

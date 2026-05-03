@@ -1,0 +1,1 @@
+# This file makes the source directory a Python package and initializes the Flask App Instance for the Image API.
